@@ -1,0 +1,220 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/admin/record": {
+      "post": {
+        "summary": "更新记录",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "device": {
+                    "type": "string"
+                  },
+                  "application": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "device",
+                  "application",
+                  "token"
+                ]
+              },
+              "example": {
+                "token": "your_token",
+                "device": "computer",
+                "application": "goland",
+                "time": "2026-01-10T18:30:00Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/guest/record": {
+      "get": {
+        "summary": "获取最近在线",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "message": "成功",
+                  "data": {
+                    "device_list": [
+                      {
+                        "device": "phone",
+                        "application": "没有相关记录",
+                        "start_time": "0001-01-01T00:00:00Z",
+                        "update_time": "0001-01-01T00:00:00Z"
+                      },
+                      {
+                        "device": "computer",
+                        "application": "goland",
+                        "start_time": "2026-01-13T02:25:00+08:00",
+                        "update_time": "2026-01-13T02:30:00+08:00"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/guest/history": {
+      "get": {
+        "summary": "获取历史在线记录",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "device_name": {
+                                "type": "string"
+                              },
+                              "record": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "device": {
+                                      "type": "string"
+                                    },
+                                    "application": {
+                                      "type": "string"
+                                    },
+                                    "start_time": {
+                                      "type": "string"
+                                    },
+                                    "update_time": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "device",
+                                    "application",
+                                    "start_time",
+                                    "update_time"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "device_name",
+                              "record"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "list"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

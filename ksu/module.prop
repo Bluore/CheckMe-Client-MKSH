@@ -1,0 +1,6 @@
+id=monitor_service
+name=Android 焦点应用监控
+version=v1.0
+versionCode=1
+author=github.com/Bluore
+description=监控顶层活动并上报到 API

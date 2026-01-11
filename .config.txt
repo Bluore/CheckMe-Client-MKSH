@@ -1,0 +1,4 @@
+api_base=http://127.0.0.1:11451/api/v1"
+token=your_token
+device=phone
+interval_seconds=60
