@@ -118,6 +118,31 @@ http_post() {
     fi
 }
 
+# 获取电量百分比
+get_battery_level() {
+    local level=$(su -c "dumpsys battery | grep level | awk '{print \$2}'" 2>/dev/null)
+    if [[ -n "$level" && "$level" =~ ^[0-9]+$ ]]; then
+        echo "$level"
+    else
+        echo "100"  # 默认值
+    fi
+}
+
+# 获取正在播放的音乐名称（如果有）
+get_music_name() {
+    local music=$(su -c "dumpsys media_session | sed -n '/User Records:/,/Controller Records:/p' | grep -m 1 'metadata:' | sed 's/.*description=//' | cut -d',' -f1" 2>/dev/null)
+    local artist=$(su -c "dumpsys media_session | sed -n '/User Records:/,/Controller Records:/p' | grep -m 1 'metadata:' | sed 's/.*description=//' | cut -d',' -f2" 2>/dev/null)
+    if [[ -n "$music" && "$music" != "null" ]]; then
+        if [[ -n "$artist" && "$artist" != "null" ]]; then
+            echo "$music - $artist"
+        else
+            echo "$music"
+        fi
+    else
+        echo ""
+    fi
+}
+
 # 主循环
 while true; do
     # 获取当前时间 (ISO 8601)
@@ -138,8 +163,16 @@ while true; do
         fi
     fi
 
+    # 获取电量和音乐信息
+    CHARGE=$(get_battery_level)
+    MUSIC=$(get_music_name)
+
     # 构造 JSON 负载
-    JSON="{\"token\":\"$TOKEN\",\"device\":\"$DEVICE\",\"application\":\"$PACKAGE\",\"time\":\"$TIME\"}"
+    if [[ -n "$MUSIC" ]]; then
+        JSON="{\"token\":\"$TOKEN\",\"device\":\"$DEVICE\",\"application\":\"$PACKAGE\",\"time\":\"$TIME\",\"data\":{\"charge\":$CHARGE,\"music_name\":\"$MUSIC\"}}"
+    else
+        JSON="{\"token\":\"$TOKEN\",\"device\":\"$DEVICE\",\"application\":\"$PACKAGE\",\"time\":\"$TIME\",\"data\":{\"charge\":$CHARGE}}"
+    fi
 
     # 发送 HTTP POST 请求
     max_retries=999

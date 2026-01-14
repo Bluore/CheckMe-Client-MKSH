@@ -21,29 +21,80 @@
                 "type": "object",
                 "properties": {
                   "token": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "身份验证"
                   },
                   "device": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "设备标识"
                   },
                   "application": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "应用id或包名"
                   },
                   "time": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "更新时间"
+                  },
+                  "ip": {
+                    "type": "string",
+                    "title": "ip地址"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "app_name": {
+                        "type": "string",
+                        "title": "应用的中文名"
+                      },
+                      "description": {
+                        "type": "string",
+                        "title": "说明"
+                      },
+                      "charge": {
+                        "type": "number",
+                        "title": "设备电量"
+                      },
+                      "location": {
+                        "type": "string",
+                        "title": "设备地址"
+                      },
+                      "is_hide_music": {
+                        "type": "boolean",
+                        "title": "是否显示音乐"
+                      },
+                      "music_name": {
+                        "type": "string",
+                        "title": "播放的音乐名"
+                      }
+                    },
+                    "title": "额外数据",
+                    "required": [
+                      "is_hide_music"
+                    ]
                   }
                 },
                 "required": [
                   "device",
                   "application",
-                  "token"
+                  "token",
+                  "ip"
                 ]
               },
               "example": {
                 "token": "your_token",
                 "device": "computer",
                 "application": "goland",
-                "time": "2026-01-10T18:30:00Z"
+                "time": "2026-01-10T18:30:00Z",
+                "ip": "127.0.0.1",
+                "data": {
+                  "app_name": "Golang开发工具",
+                  "description": "golang开发",
+                  "charge": 91,
+                  "location": "ChengDu",
+                  "is_hide_music": false,
+                  "music_name": "The Bird Song"
+                }
               }
             }
           }
@@ -64,135 +115,6 @@
                     },
                     "data": {
                       "type": "null"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "message",
-                    "data"
-                  ]
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/guest/record": {
-      "get": {
-        "summary": "获取最近在线",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                },
-                "example": {
-                  "code": 200,
-                  "message": "成功",
-                  "data": {
-                    "device_list": [
-                      {
-                        "device": "phone",
-                        "application": "没有相关记录",
-                        "start_time": "0001-01-01T00:00:00Z",
-                        "update_time": "0001-01-01T00:00:00Z"
-                      },
-                      {
-                        "device": "computer",
-                        "application": "goland",
-                        "start_time": "2026-01-13T02:25:00+08:00",
-                        "update_time": "2026-01-13T02:30:00+08:00"
-                      }
-                    ]
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/guest/history": {
-      "get": {
-        "summary": "获取历史在线记录",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "list": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "device_name": {
-                                "type": "string"
-                              },
-                              "record": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "device": {
-                                      "type": "string"
-                                    },
-                                    "application": {
-                                      "type": "string"
-                                    },
-                                    "start_time": {
-                                      "type": "string"
-                                    },
-                                    "update_time": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "required": [
-                                    "device",
-                                    "application",
-                                    "start_time",
-                                    "update_time"
-                                  ]
-                                }
-                              }
-                            },
-                            "required": [
-                              "device_name",
-                              "record"
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "list"
-                      ]
                     }
                   },
                   "required": [
